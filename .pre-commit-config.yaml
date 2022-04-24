@@ -16,11 +16,31 @@ repos:
     rev: v2.8.0
     hooks:
       - id: hadolint-docker
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.14.0
     hooks:
       - id: eslint
-        name: eslint
-        entry: ./node_modules/.bin/eslint
-        language: system
         files: \.[jt]sx?$
         types: [file]
+        additional_dependencies:
+          - "@typescript-eslint/eslint-plugin@^5.20.0"
+          - "@typescript-eslint/parser@^5.20.0"
+          - "eslint@^8.14.0"
+          - "eslint-config-prettier@^8.5.0"
+          - "eslint-plugin-import@^2.26.0"
+          - "eslint-plugin-jest@^26.1.5"
+          - "eslint-plugin-jest-formatting@^3.1.0"
+          - "eslint-plugin-prettier@^4.0.0"
+          - "jest@^27.5.1"
+          - "prettier@^2.6.2"
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.6.2
+    hooks:
+      - id: prettier
+  - repo: local
+    hooks:
+      - id: buildifier
+        name: buildifier
+        entry: buildifier --mode=fix
+        language: system
+        files: '^(.*/)?(BUILD\.bazel|BUILD)$|\.bzl$|^WORKSPACE$'

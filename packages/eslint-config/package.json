@@ -1,0 +1,16 @@
+{
+  "name": "@usrbinboat/eslint-config",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.json",
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": ">= 4",
+    "eslint": ">= 7",
+    "eslint-config-prettier": ">= 8",
+    "eslint-plugin-import": ">= 2",
+    "eslint-plugin-jest": ">= 24",
+    "eslint-plugin-jest-formatting": ">= 3",
+    "eslint-plugin-prettier": ">= 4",
+    "prettier": ">= 2"
+  }
+}

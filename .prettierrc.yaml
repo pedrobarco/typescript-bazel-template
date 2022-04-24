@@ -1,9 +1,0 @@
-tabWidth: 4
-semi: true
-quoteProps: consistent
-overrides:
-  - files:
-      - "*.json"
-      - "*.yaml"
-    options:
-      tabWidth: 2
