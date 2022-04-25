@@ -7,5 +7,7 @@ rules:
       - "core"
       - "add"
       - "sub"
+      - "eslint"
+      - "prettier"
       # apps
       - "server"

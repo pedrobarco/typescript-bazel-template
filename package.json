@@ -13,6 +13,7 @@
     "@usrbinboat/prettier-config": "link:./packages/prettier-config",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-jest-formatting": "^3.1.0",
@@ -24,9 +25,7 @@
     "tslib": "^2.4.0",
     "typescript": "^4.6.3"
   },
-  "dependencies": {
-    "@usrbinboat/core": "link:./packages/core"
-  },
+  "dependencies": {},
   "eslintConfig": {
     "extends": "@usrbinboat",
     "parserOptions": {
