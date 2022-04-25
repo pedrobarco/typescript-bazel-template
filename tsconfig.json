@@ -5,6 +5,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@usrbinboat/core": ["packages/core/src"]
+    }
+  },
+  "exclude": ["bazel-*"]
 }

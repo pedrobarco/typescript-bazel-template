@@ -12,11 +12,9 @@ ts_project(
 )
 
 js_library(
-    name = "lib",
+    name = "core",
     # Code that depends on this target can import from "@usrbinboat/core"
     package_name = "@usrbinboat/core",
-    # Consumers might need fields like "main" or "typings"
-    srcs = ["package.json"],
     # The .js and .d.ts outputs from above will be part of the package
     deps = ["tsconfig"],
 )
