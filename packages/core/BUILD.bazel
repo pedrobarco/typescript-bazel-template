@@ -1,0 +1,22 @@
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+
+ts_project(
+    # glob is a quick way to select all the code,
+    # but has performance penalty in that Bazel must evaluate it.
+    srcs = glob(
+        ["src/**/*.ts"],
+        exclude = ["src/**/*.spec.ts"],
+    ),
+    tsconfig = "//:tsconfig",
+)
+
+js_library(
+    name = "lib",
+    # Code that depends on this target can import from "@usrbinboat/core"
+    package_name = "@usrbinboat/core",
+    # Consumers might need fields like "main" or "typings"
+    srcs = ["package.json"],
+    # The .js and .d.ts outputs from above will be part of the package
+    deps = ["tsconfig"],
+)

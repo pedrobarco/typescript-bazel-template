@@ -1,7 +1,7 @@
 {
   "name": "@usrbinboat/eslint-config",
+  "version": "0.0.0",
   "private": true,
-  "version": "1.0.0",
   "main": "index.json",
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": ">= 4",
