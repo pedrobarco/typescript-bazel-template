@@ -1,4 +1,5 @@
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@npm//jest-cli:index.bzl", "jest_test")
 
 ts_project(
     name = "add",
@@ -14,5 +15,39 @@ ts_project(
     visibility = ["//visibility:public"],
     deps = [
         "//packages/core",
+    ],
+)
+
+ts_project(
+    name = "test_lib",
+    # glob is a quick way to select all the code,
+    # but has performance penalty in that Bazel must evaluate it.
+    srcs = glob(
+        include = ["*.spec.ts"],
+    ),
+    declaration = True,
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        ":add",
+        "@npm//@types/jest",
+        "@npm//jest",
+        "@npm//ts-jest",
+    ],
+)
+
+jest_test(
+    name = "test",
+    args = [
+        "--no-cache",
+        "--no-watchman",
+        "--ci",
+        "--colors",
+        "--config",
+        "jest.config.ts",
+    ],
+    data = [
+        ":test_lib",
+        "//:jest.config.ts",
     ],
 )
