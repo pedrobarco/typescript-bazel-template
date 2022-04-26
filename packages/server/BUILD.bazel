@@ -1,0 +1,64 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@npm//jest-cli:index.bzl", "jest_test")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+
+ts_project(
+    name = "server",
+    # glob is a quick way to select all the code,
+    # but has performance penalty in that Bazel must evaluate it.
+    srcs = glob(
+        include = ["*.ts"],
+        exclude = ["*.spec.ts"],
+    ),
+    declaration = True,
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//packages/add",
+        "@npm//@types/express",
+        "@npm//express",
+    ],
+)
+
+nodejs_binary(
+    name = "bin",
+    data = [
+        ":server",
+    ],
+    entry_point = ":index.ts",
+)
+
+ts_project(
+    name = "test_lib",
+    # glob is a quick way to select all the code,
+    # but has performance penalty in that Bazel must evaluate it.
+    srcs = glob(
+        include = ["*.spec.ts"],
+    ),
+    declaration = True,
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        ":server",
+        "@npm//@types/jest",
+        "@npm//jest",
+        "@npm//ts-jest",
+    ],
+)
+
+jest_test(
+    name = "test",
+    args = [
+        "--no-cache",
+        "--no-watchman",
+        "--ci",
+        "--colors",
+        "--config",
+        "jest.config.ts",
+    ],
+    data = [
+        ":test_lib",
+        "//:jest.config.ts",
+    ],
+)
