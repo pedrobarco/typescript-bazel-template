@@ -1,7 +1,7 @@
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
 ts_project(
-    name = "core",
+    name = "add",
     # glob is a quick way to select all the code,
     # but has performance penalty in that Bazel must evaluate it.
     srcs = glob(
@@ -12,4 +12,7 @@ ts_project(
     declaration_map = True,
     tsconfig = "//:tsconfig",
     visibility = ["//visibility:public"],
+    deps = [
+        "//packages/core",
+    ],
 )
