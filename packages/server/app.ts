@@ -13,7 +13,7 @@ type AppOptions = Partial<AppProps> & {
 
 export class App {
     private app: Application;
-    private port: number;
+    private readonly port: number;
 
     private constructor(props: AppProps) {
         this.app = express();
