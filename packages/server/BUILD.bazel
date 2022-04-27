@@ -15,6 +15,7 @@ ts_project(
     visibility = ["//visibility:public"],
     deps = [
         "//packages/add:lib",
+        "//packages/core:lib",
         "@npm//@types/express",
         "@npm//express",
     ],
