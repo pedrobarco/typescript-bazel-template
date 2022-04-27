@@ -1,3 +1,4 @@
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@npm//jest-cli:index.bzl", "jest_test")
 
@@ -13,6 +14,13 @@ ts_project(
     declaration_map = True,
     tsconfig = "//:tsconfig",
     visibility = ["//visibility:public"],
+)
+
+js_library(
+    name = "lib",
+    package_name = "@usrbinboat/core",
+    visibility = ["//visibility:public"],
+    deps = [":core"],
 )
 
 ts_project(

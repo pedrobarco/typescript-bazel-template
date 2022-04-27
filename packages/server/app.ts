@@ -1,4 +1,4 @@
-import { Operation } from "@usrbinboat/core";
+import type { Operation } from "@usrbinboat/core";
 import type { Application, Request, Response } from "express";
 import express from "express";
 

@@ -280,6 +280,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@bazel/ibazel@^0.16.2":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@bazel/ibazel/-/ibazel-0.16.2.tgz#05dd7f06659759fda30f87b15534f1e42f1201bb"
+  integrity sha512-KgqAWMH0emL6f3xH6nqyTryoBMqlJ627LBIe9PT1PRRQPz2FtHib3FIHJPukp1slzF3hJYZvdiVwgPnHbaSOOA==
+
 "@bazel/typescript@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@bazel/typescript/-/typescript-5.4.0.tgz#0a24e8d47152728f71b26b73adc3913645e5309e"
