@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "bazelbuild.vscode-bazel",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}
