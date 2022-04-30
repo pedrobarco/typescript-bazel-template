@@ -1,5 +1,6 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 
 ts_project(
     name = "server",
@@ -27,4 +28,11 @@ nodejs_binary(
         ":server",
     ],
     entry_point = ":index.ts",
+)
+
+nodejs_image(
+    name = "image",
+    binary = "bin",
+    include_node_repo_args = False,
+    node_repository_name = "nodejs_linux_amd64",
 )
