@@ -18,8 +18,8 @@ Setup
 
 Development
 
-- `bazel build ...` (Build all packages)
-- `bazel test ...` (Test all packages)
+- `bazel build //...` (Build all packages)
+- `bazel test //...` (Test all packages)
 - `bazel run //packages/server` (Start development backend service)
 - `bazel build //packages/server:image` (Build server image)
 - `docker run --rm -i -p 8080:8080 bazel/packages/server:image` (Run container image)
