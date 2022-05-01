@@ -1,11 +1,9 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+load("@npm//jest-cli:index.bzl", "jest_test")
 
 ts_project(
-    name = "server",
-    # glob is a quick way to select all the code,
-    # but has performance penalty in that Bazel must evaluate it.
     srcs = glob(
         include = ["*.ts"],
         exclude = ["*.spec.ts"],
@@ -15,24 +13,58 @@ ts_project(
     tsconfig = "//:tsconfig",
     visibility = ["//visibility:public"],
     deps = [
-        "//packages/add:lib",
-        "//packages/core:lib",
+        "//packages/add",
+        "//packages/core",
         "@npm//@types/express",
         "@npm//express",
     ],
 )
 
 nodejs_binary(
-    name = "bin",
+    name = "server",
     data = [
-        ":server",
+        ":tsconfig",
     ],
     entry_point = ":index.ts",
 )
 
 nodejs_image(
     name = "image",
-    binary = "bin",
+    binary = ":server",
     include_node_repo_args = False,
     node_repository_name = "nodejs_linux_amd64",
+)
+
+ts_project(
+    name = "tsconfig_test",
+    srcs = glob(
+        include = ["*.spec.ts"],
+    ),
+    declaration = True,
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        ":tsconfig",
+        "@npm//@types/jest",
+        "@npm//@types/supertest",
+        "@npm//jest",
+        "@npm//supertest",
+        "@npm//ts-jest",
+    ],
+)
+
+jest_test(
+    name = "test",
+    args = [
+        "--no-cache",
+        "--no-watchman",
+        "--ci",
+        "--colors",
+        "--config",
+        "jest.config.ts",
+    ],
+    data = [
+        ":tsconfig_test",
+        "//:jest.config.ts",
+    ],
 )

@@ -3,9 +3,6 @@ load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@npm//jest-cli:index.bzl", "jest_test")
 
 ts_project(
-    name = "core",
-    # glob is a quick way to select all the code,
-    # but has performance penalty in that Bazel must evaluate it.
     srcs = glob(
         include = ["*.ts"],
         exclude = ["*.spec.ts"],
@@ -17,16 +14,14 @@ ts_project(
 )
 
 js_library(
-    name = "lib",
+    name = "core",
     package_name = "@usrbinboat/core",
     visibility = ["//visibility:public"],
-    deps = [":core"],
+    deps = [":tsconfig"],
 )
 
 ts_project(
-    name = "test_lib",
-    # glob is a quick way to select all the code,
-    # but has performance penalty in that Bazel must evaluate it.
+    name = "tsconfig_test",
     srcs = glob(
         include = ["*.spec.ts"],
     ),
@@ -34,7 +29,7 @@ ts_project(
     declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
-        ":core",
+        ":tsconfig",
         "@npm//@types/jest",
         "@npm//jest",
         "@npm//ts-jest",
@@ -52,7 +47,7 @@ jest_test(
         "jest.config.ts",
     ],
     data = [
-        ":test_lib",
+        ":tsconfig_test",
         "//:jest.config.ts",
     ],
 )

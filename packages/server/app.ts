@@ -12,7 +12,7 @@ type AppOptions = Partial<AppProps> & {
 };
 
 export class App {
-    private app: Application;
+    public readonly app: Application;
     private readonly port: number;
 
     private constructor(props: AppProps) {

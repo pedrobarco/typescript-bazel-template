@@ -22,5 +22,5 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "git.ignoredRepositories": ["${workspaceFolder}/bazel-${workspaceFolder}"]
+  "git.autoRepositoryDetection": false
 }
