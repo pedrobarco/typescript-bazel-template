@@ -37,7 +37,7 @@ Deployment (TBD)
 **Libraries**
 
 - [`@usrbinboat/core`](packages/core) **Typescript**, core operation class
-- [`@usrbinboat/add`](libraries/add) **Typescript**, add operation class
+- [`@usrbinboat/add`](packages/add) **Typescript**, add operation class
 
 **Miscellaneous**
 
