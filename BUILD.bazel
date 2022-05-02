@@ -4,7 +4,10 @@ package(default_visibility = ["//visibility:public"])
 
 exports_files([
     "tsconfig.json",
+    "tsconfig.eslint.json",
     "jest.config.ts",
+    ".prettierrc.json",
+    ".eslintrc.json",
 ])
 
 ts_config(

@@ -10,37 +10,7 @@
     "declarationMap": true,
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "bazel-out/k8-fastbuild/bin/external/npm/node_modules/@types/*",
-        "bazel-out/darwin-fastbuild/bin/external/npm/node_modules/@types/*",
-        "bazel-out/x64_windows-fastbuild/bin/external/npm/node_modules/@types/*",
-        "bazel-out/k8-dbg/bin/external/npm/node_modules/@types/*",
-        "bazel-out/darwin-dbg/bin/external/npm/node_modules/@types/*",
-        "bazel-out/x64_windows-dbg/bin/external/npm/node_modules/@types/*",
-        "bazel-out/k8-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/@types/*",
-        "bazel-out/darwin-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/@types/*",
-        "bazel-out/x64_windows-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/@types/*",
-        "bazel-out/k8-fastbuild/bin/external/npm/node_modules/*",
-        "bazel-out/darwin-fastbuild/bin/external/npm/node_modules/*",
-        "bazel-out/x64_windows-fastbuild/bin/external/npm/node_modules/*",
-        "bazel-out/k8-dbg/bin/external/npm/node_modules/*",
-        "bazel-out/darwin-dbg/bin/external/npm/node_modules/*",
-        "bazel-out/x64_windows-dbg/bin/external/npm/node_modules/*",
-        "bazel-out/k8-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/*",
-        "bazel-out/darwin-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/*",
-        "bazel-out/x64_windows-fastbuild-ST-4a519fd6d3e4/bin/external/npm/node_modules/*"
-      ],
-      "@usrbinboat/*": [
-        "bazel-out/k8-fastbuild/bin/packages/*",
-        "bazel-out/darwin-fastbuild/bin/packages/*",
-        "bazel-out/x64_windows-fastbuild/bin/packages/*",
-        "bazel-out/k8-dbg/bin/packages/*",
-        "bazel-out/darwin-dbg/bin/packages/*",
-        "bazel-out/x64_windows-dbg/bin/packages/*",
-        "bazel-out/k8-fastbuild-ST-4a519fd6d3e4/bin/packages/*",
-        "bazel-out/darwin-fastbuild-ST-4a519fd6d3e4/bin/packages/*",
-        "bazel-out/x64_windows-fastbuild-ST-4a519fd6d3e4/bin/packages/*"
-      ]
+      "@usrbinboat/*": ["packages/*"]
     },
     "rootDirs": [
       ".",
