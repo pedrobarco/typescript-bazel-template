@@ -23,8 +23,7 @@ Development
 - `bazel run //packages/server` (Start development backend service)
 - `bazel build //packages/server:image` (Build server image)
 - `docker run --rm -i -p 8080:8080 bazel/packages/server:image` (Run container image)
-- `bazel test //packages/<package>` (Run jest unit tests)
-- `bazel run lint` (Run eslint + prettier to check linting) (TBD)
+- `bazel test //packages/<package>` (Run tests and lint)
 
 Deployment (TBD)
 
