@@ -1,4 +1,4 @@
-import type { Operation } from "@usrbinboat/core";
+import { Operation } from "@usrbinboat/core";
 import type { Application, Request, Response } from "express";
 import express from "express";
 
@@ -25,8 +25,10 @@ export class App {
         this.app.get("/", (_: Request, res: Response) => {
             const num1 = Math.floor(Math.random() * 10);
             const num2 = Math.floor(Math.random() * 10);
-            const str = operation.stringify(num1, num2);
-            res.send(str);
+            if (operation instanceof Operation) {
+                const str = operation.stringify(num1, num2);
+                res.send(str);
+            }
         });
     }
 
