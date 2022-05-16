@@ -62,9 +62,20 @@ jest_test(
         "--config",
         "jest.config.ts",
     ],
-    data = [
-        ":tsconfig_test",
+    data = glob(
+        ["*.ts"],
+        exclude = ["node_modules"],
+    ) + [
         "//:jest.config.ts",
+        "//:tsconfig",
+        "//packages/add",
+        "//packages/core",
+        "@npm//@types/express",
+        "@npm//@types/jest",
+        "@npm//@types/supertest",
+        "@npm//express",
+        "@npm//supertest",
+        "@npm//ts-jest",
     ],
 )
 
