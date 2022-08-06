@@ -11,6 +11,7 @@ ts_project(
     ),
     declaration = True,
     declaration_map = True,
+    source_map = True,
     tsconfig = "//:tsconfig",
     deps = [
         "//packages/add",
@@ -42,9 +43,11 @@ ts_project(
     ),
     declaration = True,
     declaration_map = True,
+    source_map = True,
     tsconfig = "//:tsconfig",
     deps = [
         ":tsconfig",
+        "//packages/core",
         "@npm//@types/jest",
         "@npm//@types/supertest",
         "@npm//supertest",
@@ -59,8 +62,7 @@ jest_test(
         "--no-watchman",
         "--ci",
         "--colors",
-        "--config",
-        "jest.config.ts",
+        "--config $(rootpath //:jest.config.ts)",
     ],
     data = [
         ":tsconfig_test",

@@ -10,6 +10,7 @@ ts_project(
     ),
     declaration = True,
     declaration_map = True,
+    source_map = True,
     tsconfig = "//:tsconfig",
 )
 
@@ -27,6 +28,7 @@ ts_project(
     ),
     declaration = True,
     declaration_map = True,
+    source_map = True,
     tsconfig = "//:tsconfig",
     deps = [
         ":tsconfig",
@@ -42,8 +44,7 @@ jest_test(
         "--no-watchman",
         "--ci",
         "--colors",
-        "--config",
-        "jest.config.ts",
+        "--config $(rootpath //:jest.config.ts)",
     ],
     data = [
         ":tsconfig_test",

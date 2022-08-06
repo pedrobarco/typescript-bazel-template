@@ -4,9 +4,13 @@ workspace(
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_NODEJS_TAG = "5.4.0"
+RULES_NODEJS_TAG = "5.5.2"
 
-RULES_NODEJS_SHA = "2b2004784358655f334925e7eadc7ba80f701144363df949b3293e1ae7a2fb7b"
+RULES_NODEJS_SHA = "c78216f5be5d451a42275b0b7dc809fb9347e2b04a68f68bad620a2b01f5c774"
+
+RULES_DOCKER_TAG = "0.25.0"
+
+RULES_DOCKER_SHA = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf"
 
 http_archive(
     name = "build_bazel_rules_nodejs",
@@ -14,14 +18,9 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_nodejs/releases/download/%s/rules_nodejs-%s.tar.gz" % (RULES_NODEJS_TAG, RULES_NODEJS_TAG),
 )
 
-RULES_DOCKER_TAG = "0.24.0"
-
-RULES_DOCKER_SHA = "27d53c1d646fc9537a70427ad7b034734d08a9c38924cc6357cc973fed300820"
-
 http_archive(
     name = "io_bazel_rules_docker",
     sha256 = RULES_DOCKER_SHA,
-    strip_prefix = "rules_docker-%s" % RULES_DOCKER_TAG,
     url = "https://github.com/bazelbuild/rules_docker/releases/download/v%s/rules_docker-v%s.tar.gz" % (RULES_DOCKER_TAG, RULES_DOCKER_TAG),
 )
 
@@ -33,7 +32,7 @@ load("@rules_nodejs//nodejs:repositories.bzl", "nodejs_register_toolchains")
 
 nodejs_register_toolchains(
     name = "nodejs",
-    node_version = "16.14.2",
+    node_version = "16.16.0",
 )
 
 load("@rules_nodejs//nodejs:yarn_repositories.bzl", "yarn_repositories")
@@ -53,10 +52,20 @@ yarn_install(
     yarn_lock = "//:yarn.lock",
 )
 
-load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
 
 container_repositories()
 
-load("@io_bazel_rules_docker//nodejs:image.bzl", _nodejs_image_repos = "repositories")
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load(
+    "@io_bazel_rules_docker//nodejs:image.bzl",
+    _nodejs_image_repos = "repositories",
+)
 
 _nodejs_image_repos()
