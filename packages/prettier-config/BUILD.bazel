@@ -1,9 +1,7 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
-
-package(default_visibility = ["//visibility:public"])
+load("//tools/nodejs:index.bzl", "prettier")
 
 exports_files([
-    ".prettierignore",
     "index.json",
 ])
 
@@ -13,3 +11,5 @@ js_library(
     srcs = [":index.json"],
     visibility = ["//visibility:public"],
 )
+
+prettier()

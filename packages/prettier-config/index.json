@@ -4,7 +4,7 @@
   "quoteProps": "consistent",
   "overrides": [
     {
-      "files": ["*.json", "*.yaml", "*.md"],
+      "files": ["*.json", "*.yaml", "*.yml", "*.md"],
       "options": {
         "tabWidth": 2
       }

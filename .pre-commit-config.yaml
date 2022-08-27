@@ -20,7 +20,7 @@ repos:
     rev: v8.14.0
     hooks:
       - id: eslint
-        files: \.[jt]sx?$
+        files: \.([jt]s|graphql)$
         types: [file]
         additional_dependencies:
           - "@typescript-eslint/eslint-plugin@^5.20.0"
@@ -31,6 +31,9 @@ repos:
           - "eslint-plugin-jest@^26.1.5"
           - "eslint-plugin-jest-formatting@^3.1.0"
           - "eslint-plugin-prettier@^4.0.0"
+          - "eslint-plugin-simple-import-sort@^7.0.0"
+          - "eslint-plugin-sonarjs@^0.13.0"
+          - "eslint-plugin-tsdoc@^0.2.16"
           - "jest@^27.5.1"
           - "prettier@^2.6.2"
   - repo: https://github.com/pre-commit/mirrors-prettier

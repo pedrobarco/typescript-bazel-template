@@ -1,3 +1,6 @@
+# always use remote jdk
+build --java_runtime_version=remotejdk_11
+
 # Specifies desired output mode for running tests.
 # Valid values are
 #   'summary' to output only test status summary

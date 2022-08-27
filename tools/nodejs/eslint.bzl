@@ -1,22 +1,27 @@
 """
-eslint rules wrapper
+eslint macros
 """
 
 load("@npm//eslint:index.bzl", "eslint_test")
 
 def eslint(
-        name,
-        config = "//:.eslintrc.json",
         srcs = None,
         deps = [],
-        ignore = "//packages/eslint-config:.eslintignore"):
-    srcs = srcs if srcs else native.glob(["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"])
+        config = "//:.eslintrc.js",
+        ignore = "//:.eslintignore"):
+    srcs = srcs if srcs else native.glob(
+        include = ["**/*.ts"],
+        exclude = ["node_modules/**/*"],
+    )
 
     eslint_test(
-        name = name,
+        name = "eslint",
         data = [
             config,
             ignore,
+            "//:tsconfig.eslint.json",
+            "//:tsconfig.json",
+            "@npm//@types/jest",
             "@npm//@typescript-eslint/eslint-plugin",
             "@npm//@typescript-eslint/parser",
             "@npm//eslint-config-prettier",
@@ -24,15 +29,15 @@ def eslint(
             "@npm//eslint-plugin-import",
             "@npm//eslint-plugin-jest",
             "@npm//eslint-plugin-jest-formatting",
+            "@npm//eslint-plugin-jsdoc",
             "@npm//eslint-plugin-prettier",
-            "@npm//@types/jest",
+            "@npm//eslint-plugin-sonarjs",
+            "@npm//eslint-plugin-tsdoc",
             "@npm//jest",
-            "@npm//ts-jest",
             "@npm//prettier",
-            "//:tsconfig.json",
-            "//:tsconfig.eslint.json",
-            "//packages/eslint-config",
-            "//packages/prettier-config",
+            "@npm//ts-jest",
+            "//packages/libraries/eslint-config",
+            "//packages/libraries/prettier-config",
             "//:.prettierrc.json",
             "//:jest.config.ts",
         ] + srcs + deps,

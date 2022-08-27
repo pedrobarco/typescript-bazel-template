@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "extends": "@usrbinboat",
-  "parserOptions": {
-    "project": "./tsconfig.eslint.json"
-  }
-}

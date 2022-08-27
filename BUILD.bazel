@@ -7,7 +7,9 @@ exports_files([
     "tsconfig.eslint.json",
     "jest.config.ts",
     ".prettierrc.json",
-    ".eslintrc.json",
+    ".prettierignore",
+    ".eslintrc.js",
+    ".eslintignore",
 ])
 
 ts_config(

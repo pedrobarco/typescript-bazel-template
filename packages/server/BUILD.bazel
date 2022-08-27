@@ -2,7 +2,7 @@ load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 load("@npm//jest-cli:index.bzl", "jest_test")
-load("//tools/lint:eslint.bzl", "eslint")
+load("//tools/nodejs:index.bzl", "prettier")
 
 ts_project(
     srcs = glob(
@@ -70,9 +70,4 @@ jest_test(
     ],
 )
 
-eslint(
-    name = "lint",
-    deps = [
-        ":tsconfig_test",
-    ],
-)
+prettier()
