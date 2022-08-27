@@ -1,15 +1,12 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
-load("//tools/nodejs:index.bzl", "prettier")
+load("//tools/nodejs:index.bzl", "lib", "prettier")
 
 exports_files([
     "index.json",
 ])
 
-js_library(
-    name = "prettier-config",
-    package_name = "@usrbinboat/prettier-config",
+lib(
     srcs = [":index.json"],
-    visibility = ["//visibility:public"],
+    main = "index.json",
 )
 
 prettier()

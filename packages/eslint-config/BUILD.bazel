@@ -1,18 +1,12 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
-load("//tools/nodejs:index.bzl", "prettier")
-
-package(default_visibility = ["//visibility:public"])
+load("//tools/nodejs:index.bzl", "lib", "prettier")
 
 exports_files([
-    ".eslintignore",
     "index.json",
 ])
 
-js_library(
-    name = "eslint-config",
-    package_name = "@usrbinboat/eslint-config",
+lib(
     srcs = [":index.json"],
-    visibility = ["//visibility:public"],
+    main = "index.json",
 )
 
 prettier()

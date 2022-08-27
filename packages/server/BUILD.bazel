@@ -1,72 +1,32 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
-load("@npm//@bazel/typescript:index.bzl", "ts_project")
-load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
-load("@npm//jest-cli:index.bzl", "jest_test")
-load("//tools/nodejs:index.bzl", "prettier")
+load("//tools/nodejs:index.bzl", "api", "jest_test", "prettier", "ts_project")
 
-ts_project(
-    srcs = glob(
-        include = ["*.ts"],
-        exclude = ["*.spec.ts"],
-    ),
-    declaration = True,
-    declaration_map = True,
-    source_map = True,
-    tsconfig = "//:tsconfig",
-    deps = [
-        "//packages/add",
-        "//packages/core",
-        "@npm//@types/express",
-        "@npm//express",
-    ],
-)
+DEPS = [
+    "//packages/add",
+    "@npm//express",
+    "@npm//@types/express",
+]
 
-nodejs_binary(
-    name = "server",
-    data = [
-        ":tsconfig",
-    ],
-    entry_point = ":index.ts",
-)
-
-nodejs_image(
-    name = "image",
-    binary = ":server",
-    include_node_repo_args = False,
-    node_repository_name = "nodejs_linux_amd64",
-)
+api(deps = DEPS)
 
 ts_project(
     name = "tsconfig_test",
     srcs = glob(
-        include = ["*.spec.ts"],
+        include = ["**/*.spec.ts"],
     ),
-    declaration = True,
-    declaration_map = True,
-    source_map = True,
-    tsconfig = "//:tsconfig",
-    deps = [
+    deps = DEPS + [
         ":tsconfig",
-        "//packages/core",
-        "@npm//@types/jest",
         "@npm//@types/supertest",
+        "@npm//@types/jest",
         "@npm//supertest",
+        "@npm//jest",
         "@npm//ts-jest",
     ],
 )
 
 jest_test(
-    name = "test",
-    args = [
-        "--no-cache",
-        "--no-watchman",
-        "--ci",
-        "--colors",
-        "--config $(rootpath //:jest.config.ts)",
-    ],
+    name = "unit",
     data = [
         ":tsconfig_test",
-        "//:jest.config.ts",
     ],
 )
 

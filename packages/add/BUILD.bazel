@@ -1,56 +1,33 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
-load("@npm//@bazel/typescript:index.bzl", "ts_project")
-load("@npm//jest-cli:index.bzl", "jest_test")
-load("//tools/nodejs:index.bzl", "prettier")
+load("//tools/nodejs:index.bzl", "jest_test", "lib", "prettier", "ts_project")
+
+DEPS = [
+    "//packages/core",
+]
 
 ts_project(
     srcs = glob(
-        include = ["*.ts"],
-        exclude = ["*.spec.ts"],
+        include = ["src/**/*.ts"],
+        exclude = ["src/**/*.spec.ts"],
     ),
-    declaration = True,
-    declaration_map = True,
-    source_map = True,
-    tsconfig = "//:tsconfig",
-    deps = ["//packages/core"],
+    deps = DEPS,
 )
 
-js_library(
-    name = "add",
-    package_name = "@usrbinboat/add",
-    visibility = ["//visibility:public"],
-    deps = [":tsconfig"],
-)
+lib(deps = [":tsconfig"])
 
 ts_project(
     name = "tsconfig_test",
-    srcs = glob(
-        include = ["*.spec.ts"],
-    ),
-    declaration = True,
-    declaration_map = True,
-    source_map = True,
-    tsconfig = "//:tsconfig",
-    deps = [
+    srcs = glob(["**/*.spec.ts"]),
+    deps = DEPS + [
         ":tsconfig",
         "@npm//@types/jest",
+        "@npm//jest",
         "@npm//ts-jest",
     ],
 )
 
 jest_test(
-    name = "test",
-    args = [
-        "--no-cache",
-        "--no-watchman",
-        "--ci",
-        "--colors",
-        "--config $(rootpath //:jest.config.ts)",
-    ],
-    data = [
-        ":tsconfig_test",
-        "//:jest.config.ts",
-    ],
+    name = "unit",
+    data = [":tsconfig_test"],
 )
 
 prettier()

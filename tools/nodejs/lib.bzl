@@ -13,7 +13,7 @@ def lib(main = "src/index.js", srcs = [], **kwargs):
         cmd = """
 cat << EOF > $@
 {
-  "name": "@lib/%s",
+  "name": "@usrbinboat/%s",
   "main": "%s"
 }
 EOF

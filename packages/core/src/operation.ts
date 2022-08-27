@@ -5,7 +5,6 @@ export abstract class Operation {
 
     stringify(a: number, b: number) {
         const res = this.exec(a, b);
-        const str = `${a} ${this.sym} ${b} = ${res}`;
-        return str;
+        return `${a} ${this.sym} ${b} = ${res}`;
     }
 }
