@@ -1,9 +1,10 @@
-load("//tools/nodejs:index.bzl", "api", "jest_test", "prettier", "ts_project")
+load("//tools/nodejs:index.bzl", "api", "prettier", "ts_project")
 
 DEPS = [
-    "//packages/add",
-    "@npm//express",
-    "@npm//@types/express",
+    "//:node_modules/@usrbinboat/add",
+    "//:node_modules/@usrbinboat/core",
+    "//:node_modules/express",
+    "//:node_modules/@types/express",
 ]
 
 api(deps = DEPS)
@@ -15,19 +16,21 @@ ts_project(
     ),
     deps = DEPS + [
         ":tsconfig",
-        "@npm//@types/supertest",
-        "@npm//@types/jest",
-        "@npm//supertest",
-        "@npm//jest",
-        "@npm//ts-jest",
+        "//:node_modules/@types/supertest",
+        "//:node_modules/@types/jest",
+        "//:node_modules/supertest",
+        "//:node_modules/jest",
+        "//:node_modules/ts-jest",
     ],
 )
 
+"""
 jest_test(
     name = "unit",
     data = [
         ":tsconfig_test",
     ],
 )
+"""
 
 prettier()

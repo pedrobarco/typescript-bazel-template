@@ -2,21 +2,21 @@
 jest macros
 """
 
-load("@npm//jest-cli:index.bzl", _jest = "jest", _jest_test = "jest_test")
+load("@npm//:jest-cli/package_json.bzl", "bin")
 
 def jest(**kwargs):
-    __jest(test = False, **kwargs)
+    _jest(test = False, **kwargs)
 
 def jest_test(**kwargs):
-    __jest(test = True, **kwargs)
+    _jest(test = True, **kwargs)
 
-def __jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest.config.ts", **kwargs):
+def _jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest.config.ts", **kwargs):
     deps = [
         jest_config,
         tsconfig,
-        "@npm//c8",
+        "//:node_modules/c8",
     ]
-    templated_args = [
+    args = [
         "--no-cache",
         "--no-watchman",
         "--ci",
@@ -25,16 +25,16 @@ def __jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest.co
     ]
 
     if test:
-        _jest_test(
+        bin.jest_test(
             name = name,
-            data = deps + data,
-            templated_args = templated_args,
+            srcs = deps + data,
+            args = args,
             **kwargs
         )
     else:
-        _jest(
+        bin.jest(
             name = name,
-            data = deps + data,
-            templated_args = templated_args,
+            srcs = deps + data,
+            args = args,
             **kwargs
         )

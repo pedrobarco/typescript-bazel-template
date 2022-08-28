@@ -2,10 +2,13 @@
 app macros
 """
 
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+"""
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
+"""
+
 load("//tools/nodejs:ts_project.bzl", "ts_project")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
 def api(
         srcs = None,
@@ -28,23 +31,24 @@ def api(
         deps = deps,
     )
 
-    nodejs_binary(
+    js_binary(
         name = name,
         data = [":tsconfig"],
-        entry_point = ":src/index.ts",
+        entry_point = "src/index.js",
         chdir = native.package_name(),
     )
 
-    nodejs_binary(
+    js_binary(
         name = "bin",
         data = [":tsconfig"],
-        entry_point = ":src/index.ts",
+        entry_point = "src/index.js",
         env = {
             "NODE_ENV": "production",
         },
         visibility = [":__subpackages__"],
     )
 
+"""
     nodejs_image(
         name = "image",
         binary = "bin",
@@ -60,3 +64,4 @@ def api(
         repository = "olisipo/test/%s" % name,
         tag = "{version}",
     )
+"""

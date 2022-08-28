@@ -1,11 +1,7 @@
 load("//tools/nodejs:index.bzl", "lib", "prettier")
 
-exports_files([
-    "index.json",
-])
-
 lib(
-    srcs = [":index.json"],
+    srcs = ["index.json"],
     main = "index.json",
 )
 

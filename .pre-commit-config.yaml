@@ -40,10 +40,8 @@ repos:
     rev: v2.6.2
     hooks:
       - id: prettier
-  - repo: local
+  - repo: https://github.com/keith/pre-commit-buildifier
+    rev: 5.1.0.1
     hooks:
       - id: buildifier
-        name: buildifier
-        entry: buildifier --mode=fix
-        language: system
-        files: '^(.*/)?(BUILD\.bazel|BUILD)$|\.bzl$|^WORKSPACE$'
+      - id: buildifier-lint
