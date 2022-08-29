@@ -1,4 +1,5 @@
 load("//tools/nodejs:index.bzl", "lib", "prettier", "ts_project")
+load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
 
 ts_project(
     srcs = glob(
@@ -20,11 +21,10 @@ ts_project(
     ],
 )
 
-"""
 jest_test(
     name = "unit",
+    config = "//:jest_config",
     data = [":tsconfig_test"],
 )
-"""
 
 prettier()

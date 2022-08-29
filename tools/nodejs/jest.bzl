@@ -10,7 +10,7 @@ def jest(**kwargs):
 def jest_test(**kwargs):
     _jest(test = True, **kwargs)
 
-def _jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest.config.ts", **kwargs):
+def _jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest_config", **kwargs):
     deps = [
         jest_config,
         tsconfig,
@@ -27,14 +27,14 @@ def _jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest.con
     if test:
         bin.jest_test(
             name = name,
-            srcs = deps + data,
+            data = deps + data,
             args = args,
             **kwargs
         )
     else:
-        bin.jest(
+        bin.jest_binary(
             name = name,
-            srcs = deps + data,
+            data = deps + data,
             args = args,
             **kwargs
         )

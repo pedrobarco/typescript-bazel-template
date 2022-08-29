@@ -1,4 +1,5 @@
 load("//tools/nodejs:index.bzl", "api", "prettier", "ts_project")
+load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
 
 DEPS = [
     "//:node_modules/@usrbinboat/add",
@@ -24,13 +25,10 @@ ts_project(
     ],
 )
 
-"""
 jest_test(
     name = "unit",
-    data = [
-        ":tsconfig_test",
-    ],
+    config = "//:jest_config",
+    data = [":tsconfig_test"],
 )
-"""
 
 prettier()

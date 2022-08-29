@@ -1,6 +1,6 @@
 load("@npm//:defs.bzl", "npm_link_all_packages")
 load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
-load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
 load("@aspect_rules_js//npm:defs.bzl", "npm_link_package")
 
 package(default_visibility = ["//visibility:public"])
@@ -10,10 +10,14 @@ npm_link_all_packages(name = "node_modules")
 exports_files([
     "tsconfig.json",
     "tsconfig.eslint.json",
-    "jest.config.ts",
     ".eslintrc.js",
     ".eslintignore",
 ])
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
+)
 
 copy_to_bin(
     name = "prettierrc",
@@ -25,9 +29,13 @@ copy_to_bin(
     srcs = [".prettierignore"],
 )
 
-ts_config(
-    name = "tsconfig",
-    src = "tsconfig.json",
+ts_project(
+    name = "jest_config",
+    srcs = ["jest.config.ts"],
+    tsconfig = {},
+    deps = [
+        "//:node_modules/@jest/types",
+    ],
 )
 
 npm_link_package(
