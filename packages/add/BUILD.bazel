@@ -1,7 +1,8 @@
-load("//tools/nodejs:index.bzl", "jest_test", "lib", "prettier", "ts_project")
+load("//tools/nodejs:index.bzl", "lib", "prettier", "ts_project")
+load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
 
 DEPS = [
-    "//packages/core",
+    "//:node_modules/@usrbinboat/core",
 ]
 
 ts_project(
@@ -19,14 +20,15 @@ ts_project(
     srcs = glob(["**/*.spec.ts"]),
     deps = DEPS + [
         ":tsconfig",
-        "@npm//@types/jest",
-        "@npm//jest",
-        "@npm//ts-jest",
+        "//:node_modules/@types/jest",
+        "//:node_modules/jest",
+        "//:node_modules/ts-jest",
     ],
 )
 
 jest_test(
     name = "unit",
+    config = "//:jest_config",
     data = [":tsconfig_test"],
 )
 

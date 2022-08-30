@@ -2,16 +2,16 @@
 prettier macros
 """
 
-load("@npm//prettier:index.bzl", "prettier_test")
+load("@npm//:prettier/package_json.bzl", "bin")
 
 def prettier(
         srcs = None,
         deps = [
-            "//packages/prettier-config",
-            "@npm//c8",
+            "//:node_modules/@usrbinboat/prettier-config",
+            "//:node_modules/c8",
         ],
-        config = "//:.prettierrc.json",
-        ignore = "//:.prettierignore"):
+        config = "//:prettierrc",
+        ignore = "//:prettierignore"):
     srcs = srcs if srcs else native.glob(
         include = [
             "**/*.js",
@@ -25,18 +25,18 @@ def prettier(
         exclude = ["node_modules/**/*"],
     )
 
-    prettier_test(
+    bin.prettier_test(
         name = "prettier",
         data = [
             config,
             ignore,
         ] + srcs + deps,
-        templated_args = [
-            "--config $(rootpath " + config + ")",
-            "--ignore-path $(rootpath " + ignore + ")",
+        args = [
+            "--config $(rootpath %s)" % config,
+            "--ignore-path $(rootpath %s)" % ignore,
             "--check",
         ] + [
-            "$(rootpath " + src + ")"
+            "$(rootpath %s)" % src
             for src in srcs
         ],
         tags = ["lint"],

@@ -2,10 +2,12 @@
 lib macros
 """
 
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
 
 def lib(main = "src/index.js", srcs = [], **kwargs):
     name = native.package_name().split("/")[-1]
+    package_name = "@usrbinboat/%s" % name
 
     native.genrule(
         name = "manifest",
@@ -13,17 +15,23 @@ def lib(main = "src/index.js", srcs = [], **kwargs):
         cmd = """
 cat << EOF > $@
 {
-  "name": "@usrbinboat/%s",
+  "name": "%s",
   "main": "%s"
 }
 EOF
-""" % (name, main),
+""" % (package_name, main),
     )
 
     js_library(
-        name = name,
-        package_name = "@usrbinboat/%s" % name,
-        visibility = ["//visibility:public"],
+        name = "lib",
         srcs = srcs + [":manifest"],
+        visibility = ["//visibility:public"],
         **kwargs
+    )
+
+    npm_package(
+        name = name,
+        srcs = [":lib"],
+        package = package_name,
+        visibility = ["//visibility:public"],
     )

@@ -1,13 +1,15 @@
-load("@npm//@bazel/typescript:index.bzl", "ts_config")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
+load("@aspect_rules_js//npm:defs.bzl", "npm_link_package")
 
 package(default_visibility = ["//visibility:public"])
+
+npm_link_all_packages(name = "node_modules")
 
 exports_files([
     "tsconfig.json",
     "tsconfig.eslint.json",
-    "jest.config.ts",
-    ".prettierrc.json",
-    ".prettierignore",
     ".eslintrc.js",
     ".eslintignore",
 ])
@@ -15,4 +17,35 @@ exports_files([
 ts_config(
     name = "tsconfig",
     src = "tsconfig.json",
+)
+
+copy_to_bin(
+    name = "prettierrc",
+    srcs = [".prettierrc.json"],
+)
+
+copy_to_bin(
+    name = "prettierignore",
+    srcs = [".prettierignore"],
+)
+
+ts_project(
+    name = "jest_config",
+    srcs = ["jest.config.ts"],
+    tsconfig = {},
+    deps = [
+        "//:node_modules/@jest/types",
+    ],
+)
+
+npm_link_package(
+    name = "node_modules/@usrbinboat/core",
+    src = "//packages/core",
+    visibility = ["//:__subpackages__"],
+)
+
+npm_link_package(
+    name = "node_modules/@usrbinboat/add",
+    src = "//packages/add",
+    visibility = ["//:__subpackages__"],
 )
