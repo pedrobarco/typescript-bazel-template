@@ -13,17 +13,17 @@
 
 Setup
 
-- `bazel run @yarn//:yarn` (Install required software and sets up project)
-- `bazel run @yarn//:yarn -- upgrade-interactive` (Check for outdated dependencies)
+- `bazel run -- @nodejs_host//:npx_bin pnpm i` (Install required software and sets up project)
+- `bazel run -- @nodejs_host//:npx_bin pnpm outdated` (Check for outdated dependencies)
 
 Development
 
 - `bazel build //...` (Build all packages)
 - `bazel test //...` (Test all packages)
 - `bazel run //packages/server` (Start development backend service)
-- `bazel build //packages/server:image` (Build server image)
+- `bazel run //packages/server:image` (Build server image)
 - `docker run --rm -i -p 8080:8080 bazel/packages/server:image` (Run container image)
-- `bazel test //packages/<package>` (Run tests and lint)
+- `bazel test //packages/<package>` (Run tests)
 
 Deployment (TBD)
 
