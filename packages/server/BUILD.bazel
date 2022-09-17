@@ -1,9 +1,12 @@
 load("//tools/nodejs:index.bzl", "api", "prettier", "ts_project")
 load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+
+npm_link_all_packages(name = "node_modules")
 
 DEPS = [
-    "//:node_modules/@usrbinboat/add",
-    "//:node_modules/@usrbinboat/core",
+    ":node_modules/@usrbinboat/add",
+    ":node_modules/@usrbinboat/core",
     "//:node_modules/express",
     "//:node_modules/@types/express",
 ]

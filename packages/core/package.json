@@ -1,0 +1,5 @@
+{
+  "name": "@usrbinboat/core",
+  "private": true,
+  "main": "src/index.js"
+}

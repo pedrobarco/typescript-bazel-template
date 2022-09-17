@@ -1,5 +1,9 @@
-load("//tools/nodejs:index.bzl", "lib", "prettier", "ts_project")
+load("//tools/nodejs:index.bzl", "prettier", "ts_project")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@npm//:defs.bzl", "npm_link_all_packages")
 load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
+
+npm_link_all_packages(name = "node_modules")
 
 ts_project(
     srcs = glob(
@@ -8,7 +12,14 @@ ts_project(
     ),
 )
 
-lib(deps = [":tsconfig"])
+npm_package(
+    name = "core",
+    srcs = [
+        "package.json",
+        ":tsconfig",
+    ],
+    visibility = ["//visibility:public"],
+)
 
 ts_project(
     name = "tsconfig_test",
