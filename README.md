@@ -13,8 +13,14 @@
 
 Setup
 
-- `bazel run -- @nodejs_host//:npx_bin pnpm i` (Install required software and sets up project)
-- `bazel run -- @nodejs_host//:npx_bin pnpm outdated` (Check for outdated dependencies)
+- `bazel fetch "@pnpm//:*"` (Fetch pnpm)
+
+  > ```bash
+  >  export PNPM="$(bazel info output_base)/external/pnpm/package/bin/pnpm.cjs"
+  > ```
+
+- `bazel run -- @nodejs_host//:node $PNPM i` (Install required software and sets up project)
+- `bazel run -- @nodejs_host//:node $PNPM outdated` (Check for outdated dependencies)
 
 Development
 
@@ -42,3 +48,7 @@ Deployment (TBD)
 
 - [`@usrbinboat/eslint-config`](packages/eslint-config), tooling and configurations for eslint
 - [`@usrbinboat/prettier-config`](packages/prettier-config), tooling and configurations for prettier
+
+```
+
+```
