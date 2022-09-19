@@ -1,8 +1,16 @@
-load("//tools/nodejs:index.bzl", "lib", "prettier")
+load("//tools/nodejs:index.bzl", "prettier")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@npm//:defs.bzl", "npm_link_all_packages")
 
-lib(
-    srcs = ["index.json"],
-    main = "index.json",
+npm_link_all_packages(name = "node_modules")
+
+npm_package(
+    name = "prettier-config",
+    srcs = [
+        "index.json",
+        "package.json",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 prettier()
