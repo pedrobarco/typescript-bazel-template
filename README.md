@@ -48,7 +48,3 @@ Deployment (TBD)
 
 - [`@usrbinboat/eslint-config`](packages/eslint-config), tooling and configurations for eslint
 - [`@usrbinboat/prettier-config`](packages/prettier-config), tooling and configurations for prettier
-
-```
-
-```
