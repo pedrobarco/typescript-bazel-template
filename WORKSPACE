@@ -12,10 +12,6 @@ RULES_PYTHON_TAG = "0.10.2"
 
 RULES_PYTHON_SHA = "a3a6e99f497be089f81ec082882e40246bfd435f52f4e82f37e89449b04573f6"
 
-RULES_NODEJS_TAG = "5.5.2"
-
-RULES_NODEJS_SHA = "c78216f5be5d451a42275b0b7dc809fb9347e2b04a68f68bad620a2b01f5c774"
-
 RULES_JS_TAG = "1.3.1"
 
 RULES_JS_SHA = "0707a425093704fab05fb91c3a4b62cf22dca18ea334d8a72f156d4c18e8db90"
@@ -50,12 +46,6 @@ http_archive(
     sha256 = RULES_PYTHON_SHA,
     strip_prefix = "rules_python-%s" % RULES_PYTHON_TAG,
     url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/%s.tar.gz" % RULES_PYTHON_TAG,
-)
-
-http_archive(
-    name = "build_bazel_rules_nodejs",
-    sha256 = RULES_NODEJS_SHA,
-    url = "https://github.com/bazelbuild/rules_nodejs/releases/download/%s/rules_nodejs-%s.tar.gz" % (RULES_NODEJS_TAG, RULES_NODEJS_TAG),
 )
 
 http_archive(
@@ -103,10 +93,6 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.18")
-
-load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
-
-build_bazel_rules_nodejs_dependencies()
 
 load("@aspect_rules_js//js:repositories.bzl", "rules_js_dependencies")
 
