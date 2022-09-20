@@ -13,14 +13,8 @@
 
 Setup
 
-- `bazel fetch "@pnpm//:*"` (Fetch pnpm)
-
-  > ```bash
-  >  export PNPM="$(bazel info output_base)/external/pnpm/package/bin/pnpm.cjs"
-  > ```
-
-- `bazel run -- @nodejs_host//:node $PNPM i` (Install required software and sets up project)
-- `bazel run -- @nodejs_host//:node $PNPM outdated` (Check for outdated dependencies)
+- `bazel run -- @pnpm//:pnpm -C $PWD i` (Install required software and sets up project)
+- `bazel run -- @pnpm//:pnpm -C $PWD outdated` (Check for outdated dependencies)
 
 Development
 
