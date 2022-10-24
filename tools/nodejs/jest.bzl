@@ -3,38 +3,29 @@ jest macros
 """
 
 load("@npm//:jest-cli/package_json.bzl", "bin")
+load("@aspect_rules_jest//jest:defs.bzl", _jest_test = "jest_test")
 
-def jest(**kwargs):
-    _jest(test = False, **kwargs)
+_DEPS = [
+    "//:node_modules/c8",
+]
 
-def jest_test(**kwargs):
-    _jest(test = True, **kwargs)
+def jest_test(data, config = "//:jest_config", **kwargs):
+    _jest_test(
+        config = config,
+        data = _DEPS + data,
+        **kwargs
+    )
 
-def _jest(name, data, test, tsconfig = "//:tsconfig", jest_config = "//:jest_config", **kwargs):
-    deps = [
-        jest_config,
-        tsconfig,
-        "//:node_modules/c8",
-    ]
-    args = [
-        "--no-cache",
-        "--no-watchman",
-        "--ci",
-        "--colors",
-        "--config $(rootpath %s)" % jest_config,
-    ]
-
-    if test:
-        bin.jest_test(
-            name = name,
-            data = deps + data,
-            args = args,
-            **kwargs
-        )
-    else:
-        bin.jest_binary(
-            name = name,
-            data = deps + data,
-            args = args,
-            **kwargs
-        )
+def jest(name, data, jest_config = "//:jest_config", **kwargs):
+    bin.jest_binary(
+        name = name,
+        data = _DEPS + data + [jest_config],
+        args = [
+            "--no-cache",
+            "--no-watchman",
+            "--ci",
+            "--colors",
+            "--config $(rootpath %s)" % jest_config,
+        ],
+        **kwargs
+    )
