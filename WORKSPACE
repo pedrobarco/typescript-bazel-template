@@ -4,49 +4,21 @@ workspace(
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_PKG_TAG = "0.7.0"
-
-RULES_PKG_SHA = "8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2"
-
-RULES_PYTHON_TAG = "0.10.2"
-
-RULES_PYTHON_SHA = "a3a6e99f497be089f81ec082882e40246bfd435f52f4e82f37e89449b04573f6"
-
 RULES_JS_TAG = "1.20.1"
 
 RULES_JS_SHA = "1aa0ab76d1f9520bb8993e2d84f82da2a9c87da1e6e8d121dbb4c857a292c2cd"
 
-RULES_TS_TAG = "1.1.0"
+RULES_TS_TAG = "1.3.0"
 
-RULES_TS_SHA = "617cc11d2ae4fe64218323da1c3776e7d25f9f45d88c1addda675d7ad736f683"
+RULES_TS_SHA = "db77d904284d21121ae63dbaaadfd8c75ff6d21ad229f92038b415c1ad5019cc"
 
-RULES_JEST_TAG = "0.10.0"
+RULES_JEST_TAG = "0.16.1"
 
-RULES_JEST_SHA = "bb3226707f9872185865a6381eb3a19311ca7b46e8ed475aad50975906a6cb6a"
-
-RULES_GO_TAG = "0.34.0"
-
-RULES_GO_SHA = "16e9fca53ed6bd4ff4ad76facc9b7b651a89db1689a2877d6fd7b82aa824e366"
+RULES_JEST_SHA = "fa103b278137738ef08fd23d3c8c9157897a7159af2aa22714bc71680da58583"
 
 RULES_DOCKER_TAG = "0.25.0"
 
 RULES_DOCKER_SHA = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf"
-
-http_archive(
-    name = "rules_pkg",
-    sha256 = RULES_PKG_SHA,
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/%s/rules_pkg-%s.tar.gz" % (RULES_PKG_TAG, RULES_PKG_TAG),
-        "https://github.com/bazelbuild/rules_pkg/releases/download/%s/rules_pkg-%s.tar.gz" % (RULES_PKG_TAG, RULES_PKG_TAG),
-    ],
-)
-
-http_archive(
-    name = "rules_python",
-    sha256 = RULES_PYTHON_SHA,
-    strip_prefix = "rules_python-%s" % RULES_PYTHON_TAG,
-    url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/%s.tar.gz" % RULES_PYTHON_TAG,
-)
 
 http_archive(
     name = "aspect_rules_js",
@@ -70,29 +42,10 @@ http_archive(
 )
 
 http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = RULES_GO_SHA,
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v%s/rules_go-v%s.zip" % (RULES_GO_TAG, RULES_GO_TAG),
-        "https://github.com/bazelbuild/rules_go/releases/download/v%s/rules_go-v%s.zip" % (RULES_GO_TAG, RULES_GO_TAG),
-    ],
-)
-
-http_archive(
     name = "io_bazel_rules_docker",
     sha256 = RULES_DOCKER_SHA,
     url = "https://github.com/bazelbuild/rules_docker/releases/download/v%s/rules_docker-v%s.tar.gz" % (RULES_DOCKER_TAG, RULES_DOCKER_TAG),
 )
-
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-
-rules_pkg_dependencies()
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains(version = "1.18")
 
 load("@aspect_rules_js//js:repositories.bzl", "rules_js_dependencies")
 
@@ -113,11 +66,15 @@ jest_repositories(
     jest_version = JEST_LATEST_VERSION,
 )
 
-load("@rules_nodejs//nodejs:repositories.bzl", "nodejs_register_toolchains")
+load("@jest//:npm_repositories.bzl", jest_npm_repositories = "npm_repositories")
+
+jest_npm_repositories()
+
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
 
 nodejs_register_toolchains(
     name = "nodejs",
-    node_version = "16.16.0",
+    node_version = DEFAULT_NODE_VERSION,
 )
 
 load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
