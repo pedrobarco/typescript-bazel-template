@@ -4,9 +4,8 @@ api macros
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//container:layer.bzl", "container_layer")
-load("//tools/docker:index.bzl", "js_image_layer")
+load("@aspect_rules_js//js:defs.bzl", "js_binary", "js_image_layer")
 load("//tools/nodejs:ts_project.bzl", "ts_project")
-load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
 def api(
         name = None,
@@ -56,20 +55,32 @@ def api(
         tags = ["no-remote-exec"],
     )
 
+    native.filegroup(
+        name = "app_tar",
+        srcs = [":layers"],
+        output_group = "app",
+    )
+
+    native.filegroup(
+        name = "node_modules_tar",
+        srcs = [":layers"],
+        output_group = "node_modules",
+    )
+
     container_layer(
         name = "app_layer",
-        tars = [":layers/app.tar"],
+        tars = [":app_tar"],
     )
 
     container_layer(
         name = "node_modules_layer",
-        tars = [":layers/node_modules.tar"],
+        tars = ["node_modules_tar"],
     )
 
     container_image(
         name = "image",
         base = "@debian_amd64//image",
-        cmd = ["/app/%s/bin.sh" % package_name],
+        cmd = ["/app/%s/bin" % package_name],
         entrypoint = ["bash"],
         layers = [
             ":app_layer",
